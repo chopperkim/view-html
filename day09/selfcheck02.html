@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>self check 02</title>
+</head>
+<body>
+<script>
+    for (let i = 100; i < 1000; i++) {
+        let sum = 0
+        let temp = i
+        while (temp != 0) {
+            sum += Math.pow(temp % 10, 3)
+            temp = parseInt(temp / 10)
+        }
+        if (i == sum) {
+            document.write(sum + "<br>")
+        }
+    }
+</script>
+</body>
+</html>
