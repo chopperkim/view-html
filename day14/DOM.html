@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .active {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+<h1 id="title">title</h1>
+<p class="text">text-1</p>
+<p class="text">text-2</p>
+<div name="log"></div>
+<div class="progress"></div>
+<ul>
+    <li>가</li>
+    <li>나</li>
+</ul>
+<button onclick="change()">변해라</button>
+<button onclick="unChange()">돌아와라</button>
+<script>
+    function unChange() {
+        document.querySelector("#title").classList.remove("active")
+    }
+    function change() {
+        document.querySelector("#title").classList.add("active")
+        // document.querySelector("#title").style.color = "red"
+        // document.querySelectorAll(".text").forEach((item, index) => {
+        //     item.style.textDecoration = "underline"
+        // })
+        // document.querySelector("ul").innerHTML += "<li>다</li>"
+        // document.getElementById("title").innerText = "내가 자바스크립트로 바꿨다"
+        // document.getElementsByClassName("text")[1].textContent = "text-10"
+        // document.querySelector("[name=log]").textContent = "자바스크립트 로깅"
+        // document.querySelectorAll(".text").forEach((item, key) => {
+        //     item.textContent = `변경된 텍스트-${key}`
+        // })
+    }
+</script>
+</body>
+</html>
