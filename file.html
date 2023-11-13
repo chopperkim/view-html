@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file</title>
+</head>
+<body>
+<div>
+    <button onclick="addElement()">동적으로 요소 추가</button>
+</div>
+<div id="log" onclick="alert('안녕')">안녕</div>
+<form name="frm1">
+    <input type="file" name="upload" multiple>
+    <button type="button">전송</button>
+</form>
+<script>
+    document.querySelector("div").onclick = () => {
+        alert("안녕하세요.");
+    }
+    document.querySelector("button").addEventListener("click", () => {
+        const files = document.frm1.upload.files;
+        Array.from(files).forEach(file => {
+            console.log("파일명: ", file.name)
+            console.log("크기: ", file.size)
+            console.log("타입: ", file.type)
+            console.log("수정일자: ", file.lastModified)
+        })
+    })
+</script>
+</body>
+</html>
