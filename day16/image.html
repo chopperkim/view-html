@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>image</title>
+</head>
+<body>
+<img src="google.webp" alt="구글 이미지" id="googleImg" style="width: 400px">
+<script>
+    document.querySelector("img").addEventListener("click", (ev) => {
+        ev.target.src = "naver.png"
+        ev.target.alt = "네이버 이미지"
+    })
+</script>
+</body>
+</html>

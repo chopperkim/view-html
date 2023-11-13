@@ -5,24 +5,30 @@
     <title>self check 02</title>
 </head>
 <body>
-<div>
-    <img src="google.webp" alt="구글 로고" width="16" style="">
-    <span>Log in with Google</span>
-</div>
-or
-<div>
-    <input type="text" placeholder="Username">
-</div>
-<div>
-    <input type="password" placeholder="Password">
-</div>
-<div>
-    <button type="button">login</button>
-</div>
-<p>forgot your password?</p>
+<form action="#">
+    <div>
+        <img src="google.webp" alt="구글 로고" width="16" style="">
+        <span>Log in with Google</span>
+    </div>
+    or
+    <div>
+        <input type="text" placeholder="Username">
+    </div>
+    <div>
+        <input type="password" placeholder="Password">
+    </div>
+    <div>
+        <button type="submit">login</button>
+    </div>
+    <p>forgot your password?</p>
+</form>
 
 <script>
-
+    const inputEl = document.querySelector("input[type=password]")
+    // 해당 요소로 포커스를 이동
+    inputEl.focus()
+    // 자바스크립트로 폼을 선택한 뒤 submit()메소드 호출 시 서버로 데이터 전송됨
+    document.forms[0].submit()
 </script>
 </body>
 </html>
