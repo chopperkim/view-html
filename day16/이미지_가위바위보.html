@@ -18,14 +18,45 @@
     </div>
     <div class="text-center my-3">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="rps" id="scissor" autocomplete="off" checked>
+            <input type="radio" class="btn-check" name="rps" id="scissor" autocomplete="off" checked value="가위">
             <label class="btn btn-outline-primary" for="scissor">가위</label>
-            <input type="radio" class="btn-check" name="rps" id="rock" autocomplete="off">
+            <input type="radio" class="btn-check" name="rps" id="rock" autocomplete="off" value="바위">
             <label class="btn btn-outline-primary" for="rock">바위</label>
-            <input type="radio" class="btn-check" name="rps" id="paper" autocomplete="off">
+            <input type="radio" class="btn-check" name="rps" id="paper" autocomplete="off" value="보">
             <label class="btn btn-outline-primary" for="paper">보</label>
         </div>
     </div>
+    <div class="text-center" id="result"></div>
 </div>
+<script>
+    const manImg = document.querySelector("#manImg")
+    const aiImg = document.querySelector("#aiImg")
+
+    document.querySelectorAll("input[name=rps]").forEach(el => {
+        el.addEventListener("click", function () {
+            // 입력받는 부분
+            let player = el.value
+            let ranNum = Math.floor(Math.random() * (2 - 0 + 1) + 0)
+            const computerArr = ["가위", "바위", "보"]
+            let ai = computerArr[ranNum]
+
+            // 처리하는 부분
+            let result = ""
+            if (player === ai) {
+                result = "비겼습니다."
+            } else if (player === "가위" && ai === "바위"
+                || player === "바위" && ai === "보"
+                || player === "보" && ai === "가위") {
+                result = "AI 컴퓨터 승!"
+            } else {
+                result = "플레이어 승!"
+            }
+            // 출력하는 부분
+            manImg.src = `images/${player}_좌.png`
+            aiImg.src = `images/${ai}_우.png`
+            document.querySelector("#result").textContent = result
+        })
+    })
+</script>
 </body>
 </html>

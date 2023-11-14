@@ -12,11 +12,12 @@
     </div>
     or
     <div>
-        <input type="text" placeholder="Username">
+        <input type="text" id="username" name="username" placeholder="Username">
     </div>
     <div>
-        <input type="password" placeholder="Password">
+        <input type="password" id="password" name="password" placeholder="Password">
     </div>
+    <div id="log" style="display: none;color: red"></div>
     <div>
         <button type="submit">login</button>
     </div>
@@ -24,11 +25,37 @@
 </form>
 
 <script>
-    const inputEl = document.querySelector("input[type=password]")
-    // 해당 요소로 포커스를 이동
-    inputEl.focus()
-    // 자바스크립트로 폼을 선택한 뒤 submit()메소드 호출 시 서버로 데이터 전송됨
-    document.forms[0].submit()
+    const idEl = document.querySelector("#username")
+    const pwEl = document.querySelector("#password")
+    document.querySelector("form").addEventListener("submit", function (ev) {
+        ev.preventDefault()
+        if (idEl.value === "") {
+            displayMessage("아이디를 입력해주세요.")
+            idEl.focus()
+        } else if (!idEl.value.includes("@")) {
+            displayMessage("아이디는 이메일 형식으로 입력해 주세요.")
+            idEl.focus()
+        } else if (pwEl.value === "") {
+            displayMessage("비밀번호를 입력해 주세요.")
+            pwEl.focus()
+        } else if (pwEl.value.length < 5) {
+            displayMessage("비밀번호는 5자리 이상 입력해 주세요.")
+            pwEl.focus()
+        } else {
+            // 모든 검증이 통과되면 submit()한다.
+            this.submit()
+        }
+    })
+    const displayMessage = function (message) {
+        const logEl = document.querySelector("#log")
+        logEl.style.display = "block"
+        logEl.textContent = message
+    }
+    // const inputEl = document.querySelector("input[type=password]")
+    // // 해당 요소로 포커스를 이동
+    // inputEl.focus()
+    // // 자바스크립트로 폼을 선택한 뒤 submit()메소드 호출 시 서버로 데이터 전송됨
+    // document.forms[1].submit()
 </script>
 </body>
 </html>
