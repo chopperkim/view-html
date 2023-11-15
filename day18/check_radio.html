@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name="myform">
+    이 름 : <input type="text" name="name"><br><br>
+    성 별 : <input type="radio" name="sung" checked>남
+    <input type="radio" name="sung">여<br><br>
+    취 미 :
+    <input type="checkbox" name="like" value="여행">여행
+    <input type="checkbox" name="like" value="독서">독서
+    <input type="checkbox" name="like" value="영화감상">영화감상
+    <input type="checkbox" name="like" value="바둑">바둑
+    <input type="checkbox" name="like" value="장기">장기
+    <input type="checkbox" name="like" value="등산">등산
+    <input type="checkbox" name="like" value="낚시">낚시
+    <br><br>
+    <input type="button" value=" 결과출력 " onclick="view(this.form)"><br><br>
+
+    <textarea cols="60" rows="10" name="result"></textarea>
+</form>
+<script>
+    /*
+취미를 선택했을 경우 결과
+    =========================
+        홍길동씨!!
+        당신은 남자이고,
+        취미는 여행, 바둑, 낚시이군요
+
+    취미를 선택하지 않았을 경우 결과
+    ================================
+    홍길동씨!!
+        당신은 남자이고,
+        취미는 없군요
+     */
+</script>
+</body>
+</html>
