@@ -9,20 +9,23 @@
   <input type="text" id="keyword">
   <button type="button" id="searchBtn">검색</button>
 </div>
-<div>
-  도로명주소 검색 결과 (<span id="totalCount"></span>건)
+<!-- bootstrap의 경우 class="d-none" -->
+<div id="display" style="display: none">
+  <div>
+    도로명주소 검색 결과 (<span id="totalCount"></span>건)
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>No</th>
+      <th>도로명주소</th>
+      <th>우편번호</th>
+    </tr>
+    </thead>
+    <tbody id="result">
+    </tbody>
+  </table>
 </div>
-<table>
-  <thead>
-  <tr>
-    <th>No</th>
-    <th>도로명주소</th>
-    <th>우편번호</th>
-  </tr>
-  </thead>
-  <tbody id="result">
-  </tbody>
-</table>
 <script>
   const baseUrl = "https://business.juso.go.kr/addrlink/addrLinkApi.do"
   const apiKey = "U01TX0FVVEgyMDIzMTExNTE1MjE0NDExNDI3ODk="
@@ -30,6 +33,9 @@
   let countPerPage = 5
 
   document.querySelector("#searchBtn").addEventListener("click", () => {
+    // 검색 결과 보여주기
+    document.querySelector("#display").style.display = "block"
+
     let keyword = document.querySelector("#keyword").value
     let queryString = `?confmKey=${apiKey}&currentPage=${currentPage}&countPerPage=${countPerPage}&keyword=${keyword}&resultType=json`
     fetch(baseUrl + queryString, {method: "GET"})
@@ -46,6 +52,12 @@
                 noEl.textContent = idx + 1
                 const addrEl = document.createElement("td")
                 addrEl.innerHTML = `<a href="#"><div>${it["roadAddr"]}</div><div>${it["jibunAddr"]}</div></a>`
+                // addrEl을 클릭시 이벤트 부여
+                addrEl.addEventListener("click", () => {
+                  opener.document.querySelector("#roadAddr").value = it["roadAddr"]
+                  opener.document.querySelector("#zipCode").value = it["zipNo"]
+                  close()
+                })
                 const zipEl = document.createElement("td")
                 zipEl.textContent = `${it["zipNo"]}`
 
