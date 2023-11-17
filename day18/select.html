@@ -59,10 +59,14 @@
         rList.selectedIndex = -1
     })
     document.querySelectorAll("button[type=button]")[1].addEventListener("click", () => {
-        const total = lList.childNodes.length
-        for (let i = 0; i < total; i++) {
-            rList.appendChild(lList[0])
-        }
+        // const total = lList.childNodes.length
+        // for (let i = 0; i < total; i++) {
+        //     rList.appendChild(lList.firstChild)
+        // }
+        document.querySelectorAll("select[name=lList] option").forEach(el => {
+            rList.appendChild(el)
+        })
+
     })
     document.querySelectorAll("button[type=button]")[2].addEventListener("click", () => {
         if (rList.selectedIndex === -1) {
@@ -73,10 +77,13 @@
         lList.selectedIndex = -1
     })
     document.querySelectorAll("button[type=button]")[3].addEventListener("click", () => {
-        const total = rList.childNodes.length
-        for (let i = 0; i < total; i++) {
-            lList.appendChild(rList[0])
-        }
+        // const total = rList.childNodes.length
+        // for (let i = 0; i < total; i++) {
+        //     lList.appendChild(rList[0])
+        // }
+        document.querySelectorAll("select[name=rList] option").forEach(el => {
+            lList.appendChild(el)
+        })
     })
 </script>
 </body>
