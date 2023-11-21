@@ -8,11 +8,13 @@
 <body>
 <div class="container">
     <h2 class="h2 text-center">TODO</h2>
-    <div class="form-floating input-group">
-        <input type="text" id="inputTodo" class="form-control">
-        <label for="inputTodo" class="form-label">할 일</label>
-        <button type="button" id="addBtn" class="btn btn-primary">추가</button>
-    </div>
+    <form name="todoForm">
+        <div class="form-floating input-group">
+            <input type="text" id="inputTodo" class="form-control">
+            <label for="inputTodo" class="form-label">할 일</label>
+            <button type="button" id="addBtn" class="btn btn-primary">추가</button>
+        </div>
+    </form>
     <ul id="todoList" class="list-group">
     </ul>
 </div>
@@ -21,55 +23,101 @@
     const addBtn = document.querySelector("#addBtn")
     const todoList = document.querySelector("#todoList")
 
-    function addTodo(todo) {
+    document.addEventListener("DOMContentLoaded", () => {
+        const todos = JSON.parse(localStorage.getItem("todos")) || []
+        todos.forEach((todo) => {
+            // {"todo": todo, "complete": false}
+            displayTodo(todo)
+        })
+    })
+
+    document.todoForm.addEventListener("submit", (ev) => {
+        ev.preventDefault()
+
+        insertTodo()
+    })
+
+    addBtn.addEventListener("click", () => {
+        insertTodo()
+    })
+
+    function displayTodo(todo) {
         const newTodo = document.createElement("li")
         newTodo.classList.add("list-group-item", "d-flex")
 
         const content = document.createElement("span")
         content.classList.add("me-auto", "align-self-center")
-        content.textContent = todo
+        content.textContent = todo["todo"]
+
+        let flag = todo["complete"]
         const completeBtn = document.createElement("button")
-        completeBtn.classList.add("btn", "btn-success")
-        completeBtn.textContent = "완료"
+        if (flag) {
+            completeBtn.classList.add("btn", "btn-warning")
+            completeBtn.textContent = "취소"
+            content.classList.add("text-decoration-line-through")
+        } else {
+            completeBtn.classList.add("btn", "btn-success")
+            completeBtn.textContent = "완료"
+            content.classList.remove("text-decoration-line-through")
+        }
+        completeBtn.addEventListener("click", (ev) => {
+            const nodes = [...ev.target.parentElement.parentElement.children]
+            completeToLocal(nodes.indexOf(ev.target.parentElement))
+            if (flag) {
+                ev.target.parentElement.firstElementChild.classList.remove("text-decoration-line-through")
+                ev.target.classList.replace("btn-warning", "btn-success")
+                ev.target.textContent = "완료"
+                flag = false
+            } else {
+                ev.target.parentElement.firstElementChild.classList.add("text-decoration-line-through")
+                ev.target.classList.replace("btn-success", "btn-warning")
+                ev.target.textContent = "취소"
+                flag = true
+            }
+        })
+
         const deleteBtn = document.createElement("button")
         deleteBtn.classList.add("btn", "btn-danger")
         deleteBtn.textContent = "삭제"
+        deleteBtn.addEventListener("click", (ev) => {
+            const nodes = [...ev.target.parentElement.parentElement.children]
+            deleteToLocal(nodes.indexOf(ev.target.parentElement))
+            ev.target.parentElement.remove()
+        })
 
         newTodo.append(content, completeBtn, deleteBtn)
         todoList.appendChild(newTodo)
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        let todos = JSON.parse(localStorage.getItem("todos")) || []
-        todos.forEach((todo) => {
-            // {"todo": todo, "complete": false, "delete": false}
-            addTodo(todo["todo"]);
-        })
-    })
-
-    addBtn.addEventListener("click", () => {
-        // <li class="list-group-item d-flex">
-        //     <span class="me-auto align-self-center">점심 먹기</span>
-        //     <button class="btn btn-success">완료</button>
-        //     <button class="btn btn-danger">삭제</button>
-        // </li>
+    function insertTodo() {
         // 새로운 내용을 추가
         // 로컬 스토리지에 저장
-        addTodo(inputTodo.value)
-        saveToLocal(inputTodo.value)
+        // {"todo": todo, "complete": false}
+        const todo = {todo: inputTodo.value, complete: false}
+        displayTodo(todo)
+        saveToLocal(todo)
         inputTodo.value = ""
-    })
+        inputTodo.focus()
+    }
 
     function saveToLocal(todo) {
-        // if (localStorage.getItem("todos")) {
-        //     todos = JSON.parse(localStorage.getItem("todos"))
-        // } else {
-        //     todos = []
-        // }
-        let todos = JSON.parse(localStorage.getItem("todos")) || []
-        todos.push({"todo": todo, "complete": false, "delete": false})
+        const todos = JSON.parse(localStorage.getItem("todos")) || []
+        todos.push(todo)
         localStorage.setItem("todos", JSON.stringify(todos))
     }
+
+    function completeToLocal(index) {
+        const todos = JSON.parse(localStorage.getItem("todos")) || []
+        todos[index].complete = !todos[index].complete
+        localStorage.setItem("todos", JSON.stringify(todos))
+    }
+
+    function deleteToLocal(index) {
+        const todos = JSON.parse(localStorage.getItem("todos")) || []
+        todos.splice(index, 1)
+        localStorage.setItem("todos", JSON.stringify(todos))
+    }
+
 </script>
 </body>
 </html>
